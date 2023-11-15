@@ -11,6 +11,7 @@ python = "3.10.12"
 django = "^4.2.7"
 djangorestframework = "^3.14.0"
 ctransformers = "^0.2.27"
+numpy = "^1.26.2"
 
 
 [build-system]
