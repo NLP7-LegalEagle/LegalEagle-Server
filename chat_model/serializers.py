@@ -1,12 +1,7 @@
 from rest_framework import serializers
 
-from .models import InputSentence, Query
+from .models import InputSentence
 
-
-class QuerySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Query
-        fields = ('question', 'response')
 
 class InputSentenceSerializer(serializers.ModelSerializer):
     class Meta:

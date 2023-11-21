@@ -6,8 +6,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .Llama import Llama
-from .models import InputSentence, Query
+from .models import InputSentence
 from .serializers import InputSentenceSerializer
+
+import torch, gc
 
 
 def index_rest(request):
@@ -31,7 +33,12 @@ class PredictSentence(APIView):
             input_sentence = InputSentence(sentence=input_text)
             input_sentence.save()
             # Load the model
+            
+            gc.collect()
+            torch.cuda.empty_cache()
             llm = Llama()
+            gc.collect()
+            torch.cuda.empty_cache()
             
             prediction = llm.text_generation(input_sentence)
 

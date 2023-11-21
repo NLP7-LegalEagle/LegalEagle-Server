@@ -13,6 +13,16 @@ djangorestframework = "^3.14.0"
 ctransformers = "^0.2.27"
 numpy = "^1.26.2"
 
+transformers = "^4.35.2"
+huggingface-hub = "^0.19.4"
+accelerate = "^0.24.1"
+torch = {version = "^2.1.1+cu121", source = "pytorch"}
+torchvision = {version = "^0.16.1+cu121", source = "pytorch"}
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu121"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]
