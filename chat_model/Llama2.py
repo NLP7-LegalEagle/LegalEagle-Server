@@ -8,20 +8,33 @@ from transformers import AutoTokenizer, pipeline, BitsAndBytesConfig, AutoModelF
 
 
 class Llama:
-    model = "meta-llama/Llama-2-7b-chat-hf"
+    name = "meta-llama/Llama-2-7b-chat-hf"
+    model = None
     tokenizer = None
     pipeline = None
     device_map = {"": 0}
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.float16,
+    )
 
     def __init__(self):
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.name)
+        self.model = AutoModelForCausalLM.from_pretrained(
+            self.name,
+            use_safetensors=True,
+            use_cache=False,
+            quantization_config=self.bnb_config,
+            trust_remote_code=True,
+            device_map={"": 0},
+        )
         self.pipeline = pipeline(
             "text-generation",
             model=self.model,
             torch_dtype=torch.float16,
             device_map=self.device_map,
         )
-
     def text_generation(self, prompt: str):
         sequences = self.pipeline(
             prompt,
