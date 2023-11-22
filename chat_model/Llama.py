@@ -1,10 +1,10 @@
 import os
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import torch
-from transformers import AutoTokenizer, pipeline, BitsAndBytesConfig, AutoModelForCausalLM
+from transformers import AutoTokenizer, pipeline
 
 
 class Llama:
@@ -30,5 +30,6 @@ class Llama:
             num_return_sequences=1,
             eos_token_id=self.tokenizer.eos_token_id,
             max_length=256,
+            max_batch_size=1,
         )
         return sequences[0]['generated_text']

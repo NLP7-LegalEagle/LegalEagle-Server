@@ -20,6 +20,9 @@ torch = {version = "^2.1.1+cu121", source = "pytorch"}
 torchvision = {version = "^0.16.1+cu121", source = "pytorch"}
 bitsandbytes = "0.41.1"
 scipy = "^1.11.4"
+llama-cpp-python = "^0.2.19"
+langchain = "^0.0.339"
+replicate = "^0.20.0"
 
 [[tool.poetry.source]]
 name = "pytorch"
