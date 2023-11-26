@@ -6,7 +6,7 @@ from Llama import *
 
 ### -- Error Handling -- ###
 class ServerError(Enum):
-    InvalidInputTextError = ("Invaild Input Text Error", "Input text is invalid")
+    InvalidInputTextError = ("Invalid Input Text Error", "Input text is invalid")
     ModelError = ("Model Error", "Model is not loaded")
 
     def __init__(self, title, description):
@@ -23,8 +23,33 @@ class ServerError(Enum):
 app = Flask(__name__)
 
 model = Llama()
+mockup = LLMMockup()
 
-@app.route('/text_generation', methods=['POST'])
+@app.route('/', methods=['GET'])
+def main():
+    # MARK: - Response Generation
+    response_dict = {"server_state": "LegalEagle Server is running"}
+    response = json.dumps(response_dict)
+    return response
+
+@app.route('/test', methods=['POST'])
+def test_text_generation():
+    # MARK: - Error Check
+    data = checkError(request.get_json())
+    if isinstance(data, ServerError):
+        response_dict = {"error": data.title, "error_description": data.description}
+        return json.dumps(response_dict)
+
+    # MARK: - Data Handling
+    input_text = data["input_text"]
+    output = mockup.text_generation(input_text)
+
+    # MARK: - Response Generation
+    response_dict = {"output": output}
+    response = json.dumps(response_dict)
+    return response
+
+@app.route('/llama', methods=['POST'])
 def text_generation():
     # MARK: - Error Check
     data = checkError(request.get_json())
