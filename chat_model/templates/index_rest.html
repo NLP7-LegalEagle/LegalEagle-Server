@@ -20,8 +20,8 @@
         <span id="inputText"></span>
       </p>
       <p>
-        <strong>Prediction:</strong>
-        <span id="prediction"></span>
+        <strong>Output:</strong>
+        <span id="output"></span>
       </p>
     </div>
 
@@ -42,7 +42,7 @@
             console.log(data)
 
             document.getElementById('inputText').innerText = data.input_text
-            document.getElementById('prediction').innerText = data.prediction
+            document.getElementById('output').innerText = data.output
           })
           .catch((error) => {
             console.error('Error:', error)
